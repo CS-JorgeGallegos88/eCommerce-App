@@ -1,9 +1,10 @@
-using ECommerce.Infrastructure.Persistence;
 using ECommerce.Api.Middlewares;
+using ECommerce.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
-using System;
 using Microsoft.Extensions.Hosting;
+using System;
+using System.IO;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +16,13 @@ var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
 {
+    // Ensure the database directory exists
+    var dbPath = Path.GetDirectoryName(Path.GetFullPath("ecommerce.db"));
+    if (!string.IsNullOrEmpty(dbPath) && !Directory.Exists(dbPath))
+    {
+        Directory.CreateDirectory(dbPath);
+    }
+
     app.UseSwagger();
     app.UseSwaggerUI(opt =>
     {

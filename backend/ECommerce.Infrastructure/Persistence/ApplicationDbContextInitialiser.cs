@@ -13,11 +13,11 @@ namespace ECommerce.Infrastructure.Persistence;
 
 public class ApplicationDbContextInitialiser
 {
-    private readonly ILogger _logger;
+    private readonly ILogger<ApplicationDbContextInitialiser> _logger;
     private readonly ApplicationDbContext _context;
     private readonly UserManager<AppUser> _userManager;
 
-    public ApplicationDbContextInitialiser(ILogger logger, ApplicationDbContext context, UserManager<AppUser> userManager)
+    public ApplicationDbContextInitialiser(ILogger<ApplicationDbContextInitialiser> logger, ApplicationDbContext context, UserManager<AppUser> userManager)
     {
         _logger = logger;
         _context = context;
@@ -43,7 +43,8 @@ public class ApplicationDbContextInitialiser
         {
             if (!await _context.Users.AnyAsync())
             {
-                var usersData = File.ReadAllText("../Ecommerce.Infrastructure/Persistence/SeedData/users.json");
+                var basePath = Path.Combine(AppContext.BaseDirectory, "..", "..", "..", "..", "ECommerce.Infrastructure");
+                var usersData = File.ReadAllText(Path.Combine(basePath, "Persistence", "SeedData", "users.json"));
 
                 var users = JsonSerializer.Deserialize<List<AppUser>>(usersData);
 
@@ -56,7 +57,8 @@ public class ApplicationDbContextInitialiser
             }
             if (!await _context.ProductBranches.AnyAsync())
             {
-                var branchesData = File.ReadAllText("../Ecommerce.Infrastructure/Persistence/SeedData/branches.json");
+                var basePath = Path.Combine(AppContext.BaseDirectory, "..", "..", "..", "..", "ECommerce.Infrastructure");
+                var branchesData = File.ReadAllText(Path.Combine(basePath, "Persistence", "SeedData", "branches.json"));
 
                 var brands = JsonSerializer.Deserialize<List<ProductBranch>>(branchesData);
 
@@ -69,7 +71,8 @@ public class ApplicationDbContextInitialiser
             }
             if (!await _context.ProductTypes.AnyAsync())
             {
-                var typesData = File.ReadAllText("../Ecommerce.Infrastructure/Persistence/SeedData/types.json");
+                var basePath = Path.Combine(AppContext.BaseDirectory, "..", "..", "..", "..", "ECommerce.Infrastructure");
+                var typesData = File.ReadAllText(Path.Combine(basePath, "Persistence", "SeedData", "types.json"));
 
                 var types = JsonSerializer.Deserialize<List<ProductType>>(typesData);
 
@@ -83,7 +86,8 @@ public class ApplicationDbContextInitialiser
             }
             if (!await _context.Products.AnyAsync())
             {
-                var productsData = File.ReadAllText("../Ecommerce.Infrastructure/Persistence/SeedData/products.json");
+                var basePath = Path.Combine(AppContext.BaseDirectory, "..", "..", "..", "..", "ECommerce.Infrastructure");
+                var productsData = File.ReadAllText(Path.Combine(basePath, "Persistence", "SeedData", "products.json"));
 
                 var products = JsonSerializer.Deserialize<List<Product>>(productsData);
 
@@ -96,7 +100,8 @@ public class ApplicationDbContextInitialiser
             }
             if (!await _context.Images.AnyAsync())
             {
-                var imagesData = File.ReadAllText("../Ecommerce.Infrastructure/Persistence/SeedData/images.json");
+                var basePath = Path.Combine(AppContext.BaseDirectory, "..", "..", "..", "..", "ECommerce.Infrastructure");
+                var imagesData = File.ReadAllText(Path.Combine(basePath, "Persistence", "SeedData", "images.json"));
 
                 var images = JsonSerializer.Deserialize<List<Image>>(imagesData);
 
